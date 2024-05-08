@@ -91,7 +91,6 @@ class AutoComplete:
 
         print("Tokenizing training data...")
         tokenized_data = get_tokenized_data(train_data)
-        print(tokenized_data[:20])
 
         print("Extracting vocabulary...")
         self.vocab = get_words_with_nplus_frequency(tokenized_data, minimum_freq)
