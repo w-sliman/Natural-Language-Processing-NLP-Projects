@@ -1,7 +1,7 @@
 import numpy as np
 
 from preprocessing import preprocess, create_dictionaries, create_transition_matrix, create_emission_matrix
-from computer_accuracy import compute_accuracy
+from compute_accuracy import compute_accuracy
 from verbati_algorithm import initialize, viterbi_forward, viterbi_backward
 
 class PartsOfSpeechTaggerHMM:
