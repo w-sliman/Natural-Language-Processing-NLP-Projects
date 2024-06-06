@@ -1,8 +1,14 @@
 import numpy as np
 
-from preprocessing import preprocess, create_dictionaries, create_transition_matrix, create_emission_matrix
+from preprocessing import (
+    preprocess,
+    create_dictionaries,
+    create_transition_matrix,
+    create_emission_matrix,
+)
 from compute_accuracy import compute_accuracy
 from verbati_algorithm import initialize, viterbi_forward, viterbi_backward
+
 
 class PartsOfSpeechTaggerHMM:
     """
@@ -25,14 +31,14 @@ class PartsOfSpeechTaggerHMM:
     - predict_pos(self, corpus_words, test_data=None): Predicts the parts of speech for a given corpus using Viterbi algorithm.
     """
 
-    def __init__(self, alpha = 0.001):
+    def __init__(self, alpha=0.001):
         """
         Initializes the PartsOfSpeechTaggerHMM object with a given smoothing parameter.
 
         Parameters:
         - alpha (float, optional): Smoothing parameter for emission and transition probabilities. Default is 0.001.
         """
-        
+
         self.alpha = alpha
 
     def fit(self, vocab, training_corpus):
@@ -46,12 +52,18 @@ class PartsOfSpeechTaggerHMM:
 
         self.vocab = vocab
 
-        self.emission_counts, self.transition_counts, self.tag_counts = create_dictionaries(training_corpus, self.vocab)
+        self.emission_counts, self.transition_counts, self.tag_counts = (
+            create_dictionaries(training_corpus, self.vocab)
+        )
         self.states = sorted(self.tag_counts.keys())
 
-        self.transition_matrix = create_transition_matrix(self.alpha, self.tag_counts, self.transition_counts)
-        self.emission_matrix = create_emission_matrix(self.alpha, self.tag_counts, self.emission_counts, list(self.vocab))
-    
+        self.transition_matrix = create_transition_matrix(
+            self.alpha, self.tag_counts, self.transition_counts
+        )
+        self.emission_matrix = create_emission_matrix(
+            self.alpha, self.tag_counts, self.emission_counts, list(self.vocab)
+        )
+
     def preprocess(self, corpus):
         """
         Preprocesses a corpus by replacing unknown words and tagging empty strings.
@@ -67,7 +79,7 @@ class PartsOfSpeechTaggerHMM:
 
         return prep
 
-    def predict_pos(self, corpus_words, test_data = None):  
+    def predict_pos(self, corpus_words, test_data=None):
         """
         Predicts the parts of speech for a given corpus using the Viterbi algorithm.
 
@@ -78,14 +90,26 @@ class PartsOfSpeechTaggerHMM:
         Returns:
         - pred (list): A list of predicted parts of speech for each word in the corpus.
         """
-        
+
         prep = self.preprocess(corpus_words)
 
         best_probs, best_paths = initialize(
-            self.states, self.tag_counts, self.transition_matrix,  self.emission_matrix,  prep, self.vocab)
-        
+            self.states,
+            self.tag_counts,
+            self.transition_matrix,
+            self.emission_matrix,
+            prep,
+            self.vocab,
+        )
+
         best_probs, best_paths = viterbi_forward(
-            self.transition_matrix, self.emission_matrix,  prep,  best_probs,  best_paths, self.vocab)
+            self.transition_matrix,
+            self.emission_matrix,
+            prep,
+            best_probs,
+            best_paths,
+            self.vocab,
+        )
 
         pred = viterbi_backward(best_probs, best_paths, prep, self.states)
 
