@@ -17,7 +17,7 @@ Welcome to the Natural Language Processing (NLP) Projects repository! This repos
 - Example Notebook: [Here](TextAutoCorrection%20with%20Word%20Probabilities/Example%20Notebook.ipynb)
 
 ### 4. Named Entity Recognition with TensorFlow and LSTMs
-- Description: This project implements a Text Named Entity Recognition Model using Tensorflow and LSTMs in a body of text.
+- Description: This project implements a Text Named Entity Recognition Model using Tensorflow and LSTMs on a body of text.
 - Example Notebook: [Here](Named%20Entity%20Recognition%20with%20TensorFlow%20and%20LSTMs/Example%20Notebook.ipynb)
 
 ## Usage
